@@ -1,0 +1,359 @@
+.container-fluid{
+    height:100vh;
+    background-color: #1a1818;
+ }
+.upperContainer{
+    height:5vh;
+ }
+.loginContainer{
+    margin:auto;
+    width:60%;
+    height:65vh;
+    background-color: #313131;
+}
+*{
+    overflow: hidden;
+}
+ @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+ @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
+
+a {
+	color: #333;
+	font-size: 14px;
+	text-decoration: none;
+	margin: 15px 0;
+}
+
+button {
+	border-radius: 2px;
+    margin-top:10px;
+	border: 1px solid #ec8337;
+	background-color: #ec8337;
+	color: #FFFFFF;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 12px 45px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;
+}
+
+button:active {
+	transform: scale(0.95);
+}
+
+button:focus {
+	outline: none;
+}
+
+button.ghost {
+	background-color: transparent;
+	border-color: #FFFFFF;
+}
+
+.loginForm {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 0 50px;
+	height: 50%;
+	text-align: center;
+}
+p{
+    color:white;
+}
+.textContainer{
+    width:80%;
+    margin:auto;
+}
+
+input {
+	background-color: #eee;
+	border: 0.2px solid #555;
+	border-radius: 5px;
+	padding: 12px 15px;
+	margin: 8px 0;
+	width: 100%;
+}
+
+.form-container {
+	position: absolute;
+	top: 0;
+	height: 100%;
+	transition: all 0.6s ease-in-out;
+}
+
+.sign-in-container {
+	left: 0;
+	width: 50%;
+	z-index: 2;
+}
+
+.container.right-panel-active .sign-in-container {
+	transform: translateX(100%);
+}
+
+.sign-up-container {
+	left: 0;
+	width: 50%;
+	opacity: 0;
+	z-index: 1;
+}
+
+.container.right-panel-active .sign-up-container {
+	transform: translateX(100%);
+	opacity: 1;
+	z-index: 5;
+	animation: show 0.6s;
+}
+
+@keyframes show {
+	0%, 49.99% {
+		opacity: 0;
+		z-index: 1;
+	}
+	
+	50%, 100% {
+		opacity: 1;
+		z-index: 5;
+	}
+}
+
+.overlay-container {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: 50%;
+	height: 100%;
+	overflow: hidden;
+	transition: transform 0.6s ease-in-out;
+	z-index: 100;
+}
+
+.container.right-panel-active .overlay-container{
+	transform: translateX(-100%);
+}
+
+.overlay {
+	background: #393738;
+	background: -webkit-linear-gradient(to right, #2f2f2f, #a8a1a2);
+	background: linear-gradient(to right, #6a6867, #424141);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 0 0;
+	color: #FFFFFF;
+	position: relative;
+	left: 0%;
+	height: 100%;
+	width: 100%;
+  	transform: translateX(0);
+	transition: transform 0.6s ease-in-out;
+}
+
+.container.right-panel-active .overlay {
+  	transform: translateX(50%);
+}
+
+.overlay-panel {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 0 40px;
+	text-align: center;
+	top: 0;
+	height: 100%;
+	width: 50%;
+	transform: translateX(0);
+	transition: transform 0.6s ease-in-out;
+}
+
+/* .overlay-left {
+	transform: translateX(-20%);
+}
+
+.container.right-panel-active .overlay-left {
+	transform: translateX(0);
+}
+
+.overlay-right {
+	right: 0;
+	transform: translateX(0);
+}
+
+.container.right-panel-active .overlay-right {
+	transform: translateX(20%);
+}
+
+.social-container {
+	margin: 20px 0;
+} */
+
+.social-container a {
+	border: 1px solid #DDDDDD;
+	border-radius: 50%;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 5px;
+	height: 40px;
+	width: 40px;
+}
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;300&display=swap');
+
+body{
+    overflow-y: auto !important;
+    font-family: 'Outfit' !important;
+}
+
+.synpulse{
+    /* background-color: #000000; */
+	background-color: #1a1818;
+    color:#F1F1F1;
+    height:730px;
+    position:relative;
+    background-position: center;
+}
+
+.synpulse-logo{
+    color:white;
+	font-family: 'Rubik', sans-serif;
+}
+
+.login1{
+background-color : #F1F1F1;
+height:730px;
+}
+
+.login-information{
+    margin-left:50px;
+}
+
+.sized-box{
+    height:190px;
+}
+
+.sized-box1{
+    height:80px;
+}
+
+.sized-box2{
+    height:50px;
+}
+
+.center{
+    margin:auto;
+}
+
+.synpulse-information{
+    color:#f49158;
+    text-align: center;
+}
+
+.synpulse-8{
+    margin-top:20px;
+    margin-left:10px;
+    padding-bottom:5px;
+    border: solid 2px white;
+    text-align:center;
+    border-radius: 5px;
+    width:35%;
+}
+
+.display{
+    width: 50% !important;
+    min-height: 730px !important;
+}
+
+.form-group{
+    width:360px;
+  }
+
+  .bg-image{
+    background-repeat: no-repeat;
+    margin-top:20px;
+    width:340px;
+    height:40px;
+    background-size:20px 20px;
+    background-position:left center;
+  }
+
+.company-name-login{
+    font-size: 32px !important;
+    font-weight: 500 !important;
+    margin: 20px !important;
+    font-family: 'Outfit' !important;
+    color: #948f8f !important;
+}
+
+.sign-in-button{
+    color:orange;
+    background-color: black;
+    border-radius:5px;
+    margin-top:10px;
+    width:150px;
+    height:50px;
+    font-size:17px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.registation{
+	color: rgb(42, 42, 42);
+}
+.registation b{
+	color: #ff7f00;
+	cursor: pointer;
+	
+}
+/* input{
+    width:350px;
+    border-top:none;
+    border-right:none;
+    border-left:none;
+    border-bottom:solid 1px black;
+} */
+
+.welcome-message{
+    padding: 0% !important;
+    width: 400px !important;
+    height: 100px !important;
+    background: none !important;
+    margin-top: 250px !important;
+    margin-left: 200px !important;
+    box-shadow: none !important;
+}
+
+.content-page{
+    width: 50% !important;
+    min-height: 730px !important;
+}
+
+ 
+
+.sign-in{
+    font-size: 40px !important;
+    font-weight: bolder !important;
+    margin: 80px !important;
+    font-family: 'Outfit' !important;
+    color: #222222 !important;
+}
+
+ 
+
+.sign-in-card{
+    margin: 100px !important;
+    height: 400px !important;
+    background: none !important;
+    box-shadow: none !important;
+}
+
+ 
+
+.title{
+    font-size: 20px !important;
+    font-weight: bolder !important;
+    font-family: 'Outfit' !important;
+    color: #222222 !important;
+}

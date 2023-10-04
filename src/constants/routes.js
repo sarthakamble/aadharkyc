@@ -1,5 +1,5 @@
 // Host URL
-// export const host = "http://localhost:8082";
+// export const host = "http://localhost:8000";
 
 // API paths 
 // export const loginPath = "/login";

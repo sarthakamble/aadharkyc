@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import './Login.css';
 import RegistrationForm from "../RegistrationPage/Registration";
+import {
+    host,
+    loginPath,
+    Landing_Page,
+    // ... other constants
+  } from "../../constants/routes";
+import AadharAuthentication from "../../components/AadharAuthentication/AadharAuthentication";
 
 export default class Login extends Component {
     constructor(props) {
@@ -30,6 +37,30 @@ export default class Login extends Component {
         const formdata = new FormData();
         formdata.append("username", this.state.username);
         formdata.append("password", this.state.password);
+        window.location = Landing_Page;
+        // Axios
+        //     .post(`${host}${loginPath}`, formdata,
+        //         {
+        //             headers: {
+        //                 'Access-Control-Allow-Origin': host,
+        //                 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+        //             },
+        //         }
+        //     )
+        //     .then(response => {
+        //         console.log(response.data);
+        //         if (response.data.message === "Successfully Logged In") {
+        //             sessionStorage.setItem("token", response.data.session_id);
+        //             sessionStorage.setItem("openai_api_key_status", response.data.openai_api_key_status); // Store the status
+        //             window.location = Landing_Page;
+        //         }
+        //     })
+        //     .catch(error => {
+        //         this.setState({
+        //             errorText: "Your password is incorrect. Please try again."
+        //         });
+        //     });
+        event.preventDefault();
     }
 
     toggleRegistrationForm = () => {

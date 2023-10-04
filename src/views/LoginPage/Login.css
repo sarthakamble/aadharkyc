@@ -299,6 +299,12 @@ height:730px;
     font-weight: bold;
     text-transform: uppercase;
 }
+.sign-in-button:hover{
+	background-color: #ff7f00;
+    /* Change color on hover */
+    color: black;
+    transition: background-color 0.3s ease;
+}
 .registation{
 	color: rgb(42, 42, 42);
 }

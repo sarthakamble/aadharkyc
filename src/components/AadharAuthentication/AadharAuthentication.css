@@ -1,0 +1,145 @@
+/* AadharAuthentication.css */
+
+/* Style for the entire container */
+.container-aadhar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #1a1818;
+}
+.aadhar {
+    max-width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+  h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Style for labels and input fields */
+  label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  
+  input {
+    background-color: #eee;
+	border: 0.2px solid #555;
+	border-radius: 5px;
+	padding: 12px 15px;
+	margin: 8px 0;
+	width: 100%;
+  }
+  
+  /* Style for buttons */
+  button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Style for success message */
+  .success-message {
+    text-align: center;
+    color: #4caf50;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  
+  /* Style for error message */
+  .error-message {
+    text-align: center;
+    color: #ff5722;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  
+
+/* OTP Verification and KYC Successful Styles */
+.kyc {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .kyc h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Style for labels and input fields */
+  .kyc label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  
+  .kyc input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    outline: none;
+  }
+  
+  /* Style for buttons */
+  .kyc button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .kyc button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Style for success message */
+  .kyc .success-message {
+    text-align: center;
+    color: #4caf50;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  
+  /* Style for error message */
+  .kyc .error-message {
+    text-align: center;
+    color: #ff5722;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+
+  .kyc-success{
+    color: #fff;
+  }

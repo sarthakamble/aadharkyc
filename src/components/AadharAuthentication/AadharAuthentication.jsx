@@ -69,14 +69,15 @@ class AadharAuthentication extends Component {
   
 
   verifyOTP = () => {
-    const { otp, ref_id } = this.state;
-
+    const { otp } = this.state; // Get OTP from the user input
+    const { ref_id } = this.props; // Assuming you receive ref_id as a prop
+  
     // Prepare JSON data for OTP and ref_id verification
     const verificationData = {
       otp: otp,
-      ref_id: ref_id,
+      ref_id: ref_id, // Use the received ref_id
     };
-
+  
     Axios.post('http://localhost:8080/verifyotp', verificationData)
       .then(response => {
         // Handle the response from the server, e.g., check if OTP and ref_id verification is successful
@@ -94,6 +95,7 @@ class AadharAuthentication extends Component {
         console.error('Error during verification:', error);
       });
   };
+  
   
 
   retrieveKYCDetails = (data) => {

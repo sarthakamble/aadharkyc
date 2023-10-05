@@ -7,6 +7,7 @@ import './AadharAuthentication.css'
 //   // ... other constants
 // } from "../../constants/routes"; // Import the constants
 import Axios from 'axios';
+import { message } from 'antd';
 
 class AadharAuthentication extends Component {
   constructor(props) {
@@ -58,6 +59,7 @@ class AadharAuthentication extends Component {
           this.generateAndSendOTP();
           this.setState({ isAuthenticated: true });
         }
+        message.success('OTP sent successfully');
       })
       .catch(error => {
         // Handle any errors and display an error message to the user

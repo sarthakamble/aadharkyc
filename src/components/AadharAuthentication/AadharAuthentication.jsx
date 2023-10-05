@@ -1,5 +1,12 @@
 import React, { Component } from "react";
 import './AadharAuthentication.css'
+// import {
+//   host,
+//   generateotp,
+//   verifyotp,
+//   // ... other constants
+// } from "../../constants/routes"; // Import the constants
+
 
 class AadharAuthentication extends Component {
   constructor(props) {
@@ -32,66 +39,78 @@ class AadharAuthentication extends Component {
 
   authenticateAadhar = () => {
     const { aadharNumber } = this.state;
-  
+
     // Prepare JSON data to send to the server
     const jsonData = {
       aadharNumber: aadharNumber,
     };
-    this.setState({ isAuthenticated: true });
-  
-    // fetch('https://example.com/api/authenticate', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(jsonData),
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //   // Handle the response from the server, e.g., check if authentication is successful
-    //   if (data.isAuthenticated) {
-    //     // Generate and send OTP to the mobile number
-    //     this.generateAndSendOTP();
-    //     this.setState({ isAuthenticated: true });
-    //   }
-    // })
-    // .catch(error => {
-    //   // Handle any errors
-    //   console.error('Error:', error);
-    // });
+    // this.setState({ isAuthenticated: true });
+
+    fetch('http://localhost:8080/generateotp', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(jsonData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Handle the response from the server, e.g., check if authentication is successful
+        if (data.isAuthenticated) {
+          // Generate and send OTP to the mobile number
+          this.generateAndSendOTP();
+          this.setState({ isAuthenticated: true });
+        }
+      })
+      .catch(error => {
+        // Handle any errors
+        console.error('Error:', error);
+      });
   };
-  
+
   verifyOTP = () => {
     const { otp } = this.state;
-  
+
     // Prepare JSON data to send to the server
     const jsonData = {
       otp: otp,
     };
-    this.setState({ isOTPVerified: true });
-  
-    // fetch('https://example.com/api/verifyOTP', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(jsonData),
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //   // Handle the response from the server, e.g., check if OTP verification is successful
-    //   if (data.isOTPVerified) {
-    //     // Retrieve KYC details from the server
-    //     this.retrieveKYCDetails();
-    //     this.setState({ isOTPVerified: true });
-    //   }
-    // })
-    // .catch(error => {
-    //   // Handle any errors
-    //   console.error('Error:', error);
-    // });
+
+    fetch('http://localhost:8080/verifyotp', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(jsonData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Handle the response from the server, e.g., check if OTP verification is successful
+        if (data.isOTPVerified) {
+          // Retrieve KYC details from the server
+          this.retrieveKYCDetails(data); // Pass the data to the retrieval function
+          this.setState({ isOTPVerified: true });
+        }
+      })
+      .catch(error => {
+        // Handle any errors
+        console.error('Error:', error);
+      });
   };
-  
+
+  retrieveKYCDetails = (data) => {
+    // Assuming the server response includes fields "name", "dob", and "care_of"
+    const { name, dob, care_of } = data;
+
+    this.setState({
+      name: name,
+      dob: dob,
+      care_of: care_of,
+    });
+  };
+
+
+
 
   sendOTP = () => {
     // Simulate sending OTP via email (replace with actual email sending logic)
@@ -159,9 +178,13 @@ class AadharAuthentication extends Component {
         {this.state.isOTPVerified && (
           <div className="kyc-success">
             <h2>KYC Successful</h2>
+            <p>Name: {this.state.name}</p>
+            <p>Date of Birth: {this.state.dob}</p>
+            <p>Care Of: {this.state.care_of}</p>
             {/* Add your KYC success message or redirection logic here */}
           </div>
         )}
+
       </div>
     );
   }

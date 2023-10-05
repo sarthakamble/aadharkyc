@@ -1,7 +1,9 @@
 // Host URL
-// export const host = "http://localhost:8000";
+export const host = "http://localhost:8080";
 
 // API paths 
+export const generateotp = "/generateotp";
+export const verifyotp = "/verifyotp";
 // export const loginPath = "/login";
 // export const logoutPath = "/logout";
 // export const process = "/process";

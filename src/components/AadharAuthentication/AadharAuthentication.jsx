@@ -50,7 +50,7 @@ class AadharAuthentication extends Component {
     const { aadharNumber } = this.state;
     // Prepare JSON data to send to the server with the correct variable name
     const jsonData = {
-      aadhar_number: aadharNumber, // Use the correct variable name
+      aadhaar_number: aadharNumber, // Use the correct variable name
     };
     
     Axios.post('http://localhost:8080/generateotp', jsonData)

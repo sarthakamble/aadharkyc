@@ -70,7 +70,7 @@ class AadharAuthentication extends Component {
       })
       .catch(error => {
         // Handle any errors and display an error message to the user
-        message.error('Error:', error);
+        message.error('Error:', response.data.message);
         console.error('Error:', error);
       });
   };

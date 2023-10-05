@@ -16,14 +16,18 @@ class AadharAuthentication extends Component {
       aadharNumber: "",
       mobileNumber: "",
       otp: "",
+      ref_id: "", // Initialize ref_id
       isAuthenticated: false,
       isOTPVerified: false,
       name: "",
       dob: "",
       care_of: "",
-      // Define ref_id in the state if needed
-      ref_id: "",
+      email: "", // Add email field here if needed
+      gender: "", // Add gender field here if needed
+      address: "", // Add address field here if needed
+      split_address: {}, // Add split_address field here if needed
     };
+    
   }
 
   handleAadharChange = (event) => {
@@ -44,12 +48,10 @@ class AadharAuthentication extends Component {
 
   authenticateAadhar = () => {
     const { aadharNumber } = this.state;
-    this.setState({ isAuthenticated: true });
     // Prepare JSON data to send to the server with the correct variable name
     const jsonData = {
       aadhar_number: aadharNumber, // Use the correct variable name
     };
-    // this.setState({ isAuthenticated: true });
     
     Axios.post('http://localhost:8080/generateotp', jsonData)
       .then(response => {
@@ -57,9 +59,10 @@ class AadharAuthentication extends Component {
         if (response.data.message === 'OTP sent successfully') {
           // Generate and send OTP to the mobile number
           this.generateAndSendOTP();
-          this.setState({ isAuthenticated: true });
+          // Store the received ref_id in the component's state
+          this.setState({ isAuthenticated: true, ref_id: response.data.ref_id });
+          message.success('OTP sent successfully');
         }
-        message.success('OTP sent successfully');
       })
       .catch(error => {
         // Handle any errors and display an error message to the user
@@ -69,13 +72,12 @@ class AadharAuthentication extends Component {
   
 
   verifyOTP = () => {
-    const { otp } = this.state; // Get OTP from the user input
-    const { ref_id } = this.props; // Assuming you receive ref_id as a prop
+    const { otp, ref_id } = this.state; // Get OTP and ref_id from the component's state
   
     // Prepare JSON data for OTP and ref_id verification
     const verificationData = {
       otp: otp,
-      ref_id: ref_id, // Use the received ref_id
+      ref_id: ref_id, // Use the stored ref_id
     };
   
     Axios.post('http://localhost:8080/verifyotp', verificationData)
@@ -100,12 +102,33 @@ class AadharAuthentication extends Component {
 
   retrieveKYCDetails = (data) => {
     // Assuming the server response includes fields "name", "dob", and "care_of"
-    const { name, dob, care_of } = data;
+    const { 
+      name, 
+      dob, 
+      care_of,
+      ref_id,
+      status,
+      message,
+      address,
+      email,
+      gender,
+      split_address,
+   } = data;
 
     this.setState({
       name: name,
       dob: dob,
       care_of: care_of,
+      ref_id,
+    status,
+    message,
+    care_of,
+    address,
+    dob,
+    email,
+    gender,
+    name,
+    split_address,
     });
   };
 
@@ -173,7 +196,16 @@ class AadharAuthentication extends Component {
             <h2>KYC Successful</h2>
             <p>Name: {this.state.name}</p>
             <p>Date of Birth: {this.state.dob}</p>
+            <p>Relation: {this.state.care_of}</p>
+            <p>Ref ID: {this.state.ref_id}</p>
+            <p>Status: {this.state.status}</p>
+            <p>Message: {this.state.message}</p>
             <p>Care Of: {this.state.care_of}</p>
+            <p>Address: {this.state.address}</p>
+            <p>Date of Birth: {this.state.dob}</p>
+            <p>Email: {this.state.email}</p>
+            <p>Gender: {this.state.gender}</p>
+            <p>Name: {this.state.name}</p>
             {/* Add your KYC success message or redirection logic here */}
           </div>
         )}

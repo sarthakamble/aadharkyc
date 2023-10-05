@@ -75,7 +75,7 @@ class AadharAuthentication extends Component {
       ref_id: ref_id,
     };
 
-    Axios.post('http://localhost:8080/verifyOTPAndRefId', verificationData)
+    Axios.post('http://localhost:8080/verifyotp', verificationData)
       .then(response => {
         // Handle the response from the server, e.g., check if OTP and ref_id verification is successful
         if (response.data.isVerified) {

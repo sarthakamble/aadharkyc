@@ -26,8 +26,11 @@ class AadharAuthentication extends Component {
       gender: "", // Add gender field here if needed
       address: "", // Add address field here if needed
       split_address: {}, // Add split_address field here if needed
+      year_of_birth: "",
+      mobile_hash: "",
+      photo_link: "",
     };
-    
+
   }
 
   handleAadharChange = (event) => {
@@ -48,17 +51,18 @@ class AadharAuthentication extends Component {
 
   authenticateAadhar = () => {
     const { aadharNumber } = this.state;
+    this.setState({ isAuthenticated: true });
     // Prepare JSON data to send to the server with the correct variable name
     const jsonData = {
       aadhaar_number: aadharNumber, // Use the correct variable name
     };
-    
+
     Axios.post('http://localhost:8080/generateotp', jsonData)
       .then(response => {
         // Handle the response from the server, e.g., check if authentication is successful
         if (response.data.message === 'OTP sent successfully') {
           // Generate and send OTP to the mobile number
-          this.generateAndSendOTP();
+          //this.generateAndSendOTP();
           // Store the received ref_id in the component's state
           this.setState({ isAuthenticated: true, ref_id: response.data.ref_id });
           message.success('OTP sent successfully');
@@ -66,24 +70,26 @@ class AadharAuthentication extends Component {
       })
       .catch(error => {
         // Handle any errors and display an error message to the user
+        message.error('Error:', error);
         console.error('Error:', error);
       });
   };
-  
+
 
   verifyOTP = () => {
     const { otp, ref_id } = this.state; // Get OTP and ref_id from the component's state
-  
+    this.setState({ isOTPVerified: true });
     // Prepare JSON data for OTP and ref_id verification
     const verificationData = {
       otp: otp,
       ref_id: ref_id, // Use the stored ref_id
     };
-  
+
     Axios.post('http://localhost:8080/verifyotp', verificationData)
       .then(response => {
+        console.log('Response from server:', response.data);
         // Handle the response from the server, e.g., check if OTP and ref_id verification is successful
-        if (response.data.isVerified) {
+        if (response.data.data.status === 'VALID') {
           // Both OTP and ref_id are verified, retrieve KYC details
           this.retrieveKYCDetails(response.data); // Pass the data to the retrieval function
           this.setState({ isOTPVerified: true });
@@ -97,14 +103,14 @@ class AadharAuthentication extends Component {
         console.error('Error during verification:', error);
       });
   };
-  
-  
+
+
 
   retrieveKYCDetails = (data) => {
     // Assuming the server response includes fields "name", "dob", and "care_of"
-    const { 
-      name, 
-      dob, 
+    const {
+      name,
+      dob,
       care_of,
       ref_id,
       status,
@@ -113,34 +119,51 @@ class AadharAuthentication extends Component {
       email,
       gender,
       split_address,
-   } = data;
+      year_of_birth,
+      mobile_hash,
+      photo_link,
+    } = data;
+
+    const {
+      country,
+      dist,
+      house,
+      landmark,
+      pincode,
+      po,
+      state,
+      street,
+      subdist,
+      vtc,
+    } = split_address;
 
     this.setState({
       name: name,
       dob: dob,
       care_of: care_of,
-      ref_id,
-    status,
-    message,
-    care_of,
-    address,
-    dob,
-    email,
-    gender,
-    name,
-    split_address,
+      address: address,
+      email: email,
+      gender: gender,
+      ref_id: ref_id,
+      status: status,
+      message: message,
+      country: country,
+      dist: dist,
+      house: house,
+      landmark: landmark,
+      pincode: pincode,
+      po: po,
+      state: state,
+      street: street,
+      subdist: subdist,
+      vtc: vtc,
+      isOTPVerified: true,
+      year_of_birth: year_of_birth,
+      mobile_hash: mobile_hash,
+      photo_link: photo_link,
+
     });
   };
-
-
-
-
-  sendOTP = () => {
-    // Simulate sending OTP via email (replace with actual email sending logic)
-    // For simplicity, we'll assume OTP sending is always successful.
-    alert(`OTP sent to ${this.state.email}`);
-  };
-
 
   render() {
     return (
@@ -162,24 +185,6 @@ class AadharAuthentication extends Component {
         {this.state.isAuthenticated && !this.state.isOTPVerified && (
           <div className="kyc">
             <h2>OTP Verification</h2>
-            {/* <label>
-              Mobile Number:
-              <input
-                type="text"
-                value={this.state.mobileNumber}
-                onChange={this.handleMobileChange}
-              />
-            </label>
-            <label>
-              Email:
-              <input
-                type="text"
-                value={this.state.email}
-                onChange={this.handleEmailChange}
-              />
-            </label>
-            <button onClick={this.sendOTP}>Send OTP</button>
-            <br /> */}
             <label>
               OTP:
               <input
@@ -200,12 +205,12 @@ class AadharAuthentication extends Component {
             <p>Ref ID: {this.state.ref_id}</p>
             <p>Status: {this.state.status}</p>
             <p>Message: {this.state.message}</p>
-            <p>Care Of: {this.state.care_of}</p>
             <p>Address: {this.state.address}</p>
-            <p>Date of Birth: {this.state.dob}</p>
             <p>Email: {this.state.email}</p>
             <p>Gender: {this.state.gender}</p>
-            <p>Name: {this.state.name}</p>
+            <p>Year of Birth: {this.state.year_of_birth}</p>
+            <p>Mobile Hash: {this.state.mobile_hash}</p>
+            <p>Photo Link: {this.state.photo_link}</p>
             {/* Add your KYC success message or redirection logic here */}
           </div>
         )}

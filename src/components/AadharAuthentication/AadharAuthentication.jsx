@@ -6,7 +6,7 @@ import './AadharAuthentication.css'
 //   verifyotp,
 //   // ... other constants
 // } from "../../constants/routes"; // Import the constants
-
+import Axios from 'axios';
 
 class AadharAuthentication extends Component {
   constructor(props) {
@@ -14,10 +14,14 @@ class AadharAuthentication extends Component {
     this.state = {
       aadharNumber: "",
       mobileNumber: "",
-      email: "",
       otp: "",
       isAuthenticated: false,
       isOTPVerified: false,
+      name: "",
+      dob: "",
+      care_of: "",
+      // Define ref_id in the state if needed
+      ref_id: "",
     };
   }
 
@@ -39,64 +43,56 @@ class AadharAuthentication extends Component {
 
   authenticateAadhar = () => {
     const { aadharNumber } = this.state;
-
-    // Prepare JSON data to send to the server
+    this.setState({ isAuthenticated: true });
+    // Prepare JSON data to send to the server with the correct variable name
     const jsonData = {
-      aadharNumber: aadharNumber,
+      aadhar_number: aadharNumber, // Use the correct variable name
     };
     // this.setState({ isAuthenticated: true });
-
-    fetch('http://localhost:8080/generateotp', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(jsonData),
-    })
-      .then(response => response.json())
-      .then(data => {
+    
+    Axios.post('http://localhost:8080/generateotp', jsonData)
+      .then(response => {
         // Handle the response from the server, e.g., check if authentication is successful
-        if (data.isAuthenticated) {
+        if (response.data.message === 'OTP sent successfully') {
           // Generate and send OTP to the mobile number
           this.generateAndSendOTP();
           this.setState({ isAuthenticated: true });
         }
       })
       .catch(error => {
-        // Handle any errors
+        // Handle any errors and display an error message to the user
         console.error('Error:', error);
       });
   };
+  
 
   verifyOTP = () => {
-    const { otp } = this.state;
+    const { otp, ref_id } = this.state;
 
-    // Prepare JSON data to send to the server
-    const jsonData = {
+    // Prepare JSON data for OTP and ref_id verification
+    const verificationData = {
       otp: otp,
+      ref_id: ref_id,
     };
 
-    fetch('http://localhost:8080/verifyotp', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(jsonData),
-    })
-      .then(response => response.json())
-      .then(data => {
-        // Handle the response from the server, e.g., check if OTP verification is successful
-        if (data.isOTPVerified) {
-          // Retrieve KYC details from the server
-          this.retrieveKYCDetails(data); // Pass the data to the retrieval function
+    Axios.post('http://localhost:8080/verifyOTPAndRefId', verificationData)
+      .then(response => {
+        // Handle the response from the server, e.g., check if OTP and ref_id verification is successful
+        if (response.data.isVerified) {
+          // Both OTP and ref_id are verified, retrieve KYC details
+          this.retrieveKYCDetails(response.data); // Pass the data to the retrieval function
           this.setState({ isOTPVerified: true });
+        } else {
+          // Handle verification failure
+          console.error('OTP and ref_id verification failed');
         }
       })
       .catch(error => {
-        // Handle any errors
-        console.error('Error:', error);
+        // Handle any errors and display an error message to the user
+        console.error('Error during verification:', error);
       });
   };
+  
 
   retrieveKYCDetails = (data) => {
     // Assuming the server response includes fields "name", "dob", and "care_of"
@@ -118,13 +114,6 @@ class AadharAuthentication extends Component {
     alert(`OTP sent to ${this.state.email}`);
   };
 
-  verifyOTP = () => {
-    // Simulate OTP verification (replace with actual OTP verification logic)
-    // For simplicity, we'll consider OTP verified if it's a non-empty string.
-    if (this.state.otp.trim() !== "") {
-      this.setState({ isOTPVerified: true });
-    }
-  };
 
   render() {
     return (
@@ -146,7 +135,7 @@ class AadharAuthentication extends Component {
         {this.state.isAuthenticated && !this.state.isOTPVerified && (
           <div className="kyc">
             <h2>OTP Verification</h2>
-            <label>
+            {/* <label>
               Mobile Number:
               <input
                 type="text"
@@ -163,7 +152,7 @@ class AadharAuthentication extends Component {
               />
             </label>
             <button onClick={this.sendOTP}>Send OTP</button>
-            <br />
+            <br /> */}
             <label>
               OTP:
               <input

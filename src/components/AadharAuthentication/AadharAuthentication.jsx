@@ -53,7 +53,7 @@ class AadharAuthentication extends Component {
 
   authenticateAadhar = () => {
     const { aadharNumber } = this.state;
-    this.setState({ isAuthenticated: true });
+    //this.setState({ isAuthenticated: true });
     // Prepare JSON data to send to the server with the correct variable name
     const jsonData = {
       aadhaar_number: aadharNumber, // Use the correct variable name
@@ -82,7 +82,7 @@ class AadharAuthentication extends Component {
 
   verifyOTP = () => {
     const { otp, ref_id } = this.state; // Get OTP and ref_id from the component's state
-    this.setState({ isOTPVerified: true });
+    //this.setState({ isOTPVerified: true });
     // Prepare JSON data for OTP and ref_id verification
     const verificationData = {
       otp: otp,

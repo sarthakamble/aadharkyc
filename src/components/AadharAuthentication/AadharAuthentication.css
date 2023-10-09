@@ -51,21 +51,21 @@ input[type="text"] {
 }
 
 /* Style for buttons */
-button {
+.classicButton {
   display: block;
   width: 100%;
   padding: 10px;
   font-size: 18px;
-  background-color: #007bff;
+  background-color: #ff9640;
   color: #fff;
   border: none;
-  border-radius: 3px;
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
-button:hover {
-  background-color: #0056b3;
+.classicButton:hover {
+  background-color: #555;
 }
 
 /* Style for success message */

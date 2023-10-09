@@ -43,6 +43,7 @@ class PANVerification extends Component {
         if (response.data.message === 'Valid PAN (Individual)' || response.data.message === 'Valid PAN (Company)' ) {
           this.setState({ isPANVerified: true, ref_id: response.data.ref_id });
           message.success(response.data.message);
+          this.retrievePANDetails(response.data);
         } else {
           message.error(response.data.message);
           this.setState({ panNumber: '', isPANVerified: false });
@@ -55,7 +56,7 @@ class PANVerification extends Component {
   };
 
 
-  retrieveKYCDetails = (data) => {
+  retrievePANDetails = (data) => {
     const {
         code,
         timestamp,

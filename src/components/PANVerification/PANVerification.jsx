@@ -12,10 +12,14 @@ class PANVerification extends Component {
       ref_id: "",
       isAuthenticated: false,
       isPANVerified: false,
-      name: "",
-      dob: "",
-      fatherName: "",
+      code: "",
+      timestamp: "",
+      transaction_id: "",
+      entity: "",
+      pan: "",
+      full_name: "",
       status: "",
+      category: "",
       message: "",
       // Add other fields if needed
     };

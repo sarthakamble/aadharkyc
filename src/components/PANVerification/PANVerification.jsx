@@ -39,13 +39,13 @@ class PANVerification extends Component {
 
     // Prepare JSON data to send to the server with the correct variable name
     const jsonData = {
-      pan_number: panNumber, // Use the correct variable name
+      pan: panNumber, // Use the correct variable name
     };
 
     Axios.post('http://localhost:8080/verifypan', jsonData)
       .then(response => {
         if (response.data.message === 'Valid PAN (Individual)' || response.data.message === 'Valid PAN (Company)' ) {
-          this.setState({ isPANVerified: true, ref_id: response.data.ref_id });
+          this.setState({ isPANVerified: true });
           message.success(response.data.message);
           this.retrievePANDetails(response.data);
         } else {

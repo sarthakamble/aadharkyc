@@ -35,11 +35,14 @@ class PANVerification extends Component {
 
   authenticatePAN = () => {
     const { panNumber } = this.state;
+    const { consent, reason } = this.state;
     //this.setState({ isPANVerified: true });
 
     // Prepare JSON data to send to the server with the correct variable name
     const jsonData = {
       pan: panNumber, // Use the correct variable name
+      consent: consent,
+      reason: reason,
     };
 
     Axios.post('http://localhost:8080/verifypan', jsonData)

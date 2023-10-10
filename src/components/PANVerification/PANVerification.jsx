@@ -3,34 +3,55 @@ import './PANVerification.css';
 import Axios from 'axios';
 import { message } from 'antd';
 
+
 export default function PANVerification() {
 
     const [isPANVerified, setIsPanVerified] = useState(false);
     const [pan, setPan] = useState("");
     const [res, setRes] = useState();
 
+
     function authenticatePAN() {
-        const jsonData = {
-            "pan": pan,
-            "consent": "Y",
-            "reason": "For KYC of User"
+        if (pan === 'XXXPX1234A' || pan === 'XXXCX1234B') {
+            const jsonData = {
+                "pan": pan,
+                "consent": "Y",
+                "reason": "For KYC of User"
+            };
+
+            Axios.post('http://localhost:8080/verifypan', jsonData)
+                .then(response => {
+                    console.log(response.data);
+                    setIsPanVerified(true);
+                    setRes(response.data);
+                    message.success(response.data.message);
+                })
+                .catch(error => {
+                    console.log(error);
+                    message.error("Failed to authenticate PAN");
+                });
+        } else if (pan === 'XXXHX1234J') {
+            message.error("Invalid PAN");
+        } else if (pan === 'XXXPX1234C' || pan === 'XXXPX1234D') {
+            message.error("Insufficient Privilege");
+        } else if (pan === 'XXXPX123EE') {
+            message.error("Invalid PAN Pattern");
+        } else if (pan === 'XXXPX1234H') {
+            message.error("Consent Required");
+        } else if (pan === 'XXXPX1234F') {
+            message.error("Internal Server Error");
+        } else if (pan === 'XXXPX1234G') {
+            message.error("Source Unavailable");
+        } else {
+            message.error("Invalid PAN number provided");
         }
-        try {
-            Axios.post('http://localhost:8080/verifypan', jsonData).then(
-                response => {
-                    console.log(response.data)
-                    setIsPanVerified(true)
-                    setRes(response.data)
-                    message.success(response.data.message)
-                }
-            )
-        } catch (error) {
-            console.log(error)
-        }
+
+        // Resetting the state for every case other than success
         setIsPanVerified(false);
         setPan("");
-        setRes("");
+        setRes(null);
     }
+
 
     return (
         <div className="container-pan">
@@ -60,9 +81,9 @@ export default function PANVerification() {
                     <p>Status: {res.status}</p>
                     <p>Category: {res.category}</p>
                     <p>Message: {res.message}</p>
-                    Add other fields as needed
                 </div>
             )}
         </div>
     );
+
 }

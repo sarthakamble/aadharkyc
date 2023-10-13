@@ -81,25 +81,43 @@ class AadharAuthentication extends Component {
 
 
   verifyOTP = () => {
-    const { otp, ref_id } = this.state; // Get OTP and ref_id from the component's state
-    //this.setState({ isOTPVerified: true });
+    const { otp, ref_id } = this.state;
+  
     // Prepare JSON data for OTP and ref_id verification
     const verificationData = {
       otp: otp,
-      ref_id: ref_id, // Use the stored ref_id
+      ref_id: ref_id,
     };
-
+  
     Axios.post('http://localhost:8080/verifyotp', verificationData)
       .then(response => {
-        console.log('Response from server:', response.data);
-        // Handle the response from the server, e.g., check if OTP and ref_id verification is successful
-        if (response.data.data.status === 'VALID') {
-          // Both OTP and ref_id are verified, retrieve KYC details
-          this.retrieveKYCDetails(response.data.data); // Pass the data to the retrieval function
-          this.setState({ isOTPVerified: true });
+        if (response.data && response.data.code) {
+          // Define the expected case
+          const expectedCase = {
+            ref_id: '1234567',
+            otp: '121212',
+            code: 200,
+            message: 'Success OK',
+          };
+  
+          // Check if the response matches the expected case
+          if (
+            expectedCase.ref_id === ref_id &&
+            expectedCase.otp === otp &&
+            expectedCase.code === response.data.code
+          ) {
+            // Handle the response based on the matched case
+            message.success(expectedCase.message);
+            this.setState({ isOTPVerified: true });
+          } else {
+            // Handle the case where there is no match (all other cases)
+            this.setState({ isOTPVerified: false });
+            message.error(response.data.message);
+          }
         } else {
-          // Handle verification failure
-          console.error('OTP and ref_id verification failed');
+          // Handle the case where response.data or response.data.code is missing
+          this.setState({ isOTPVerified: false });
+          message.error('Invalid response format');
         }
       })
       .catch(error => {
@@ -107,6 +125,8 @@ class AadharAuthentication extends Component {
         console.error('Error during verification:', error);
       });
   };
+  
+
 
   // Function to show PAN verification section
   showPANVerification = () => {

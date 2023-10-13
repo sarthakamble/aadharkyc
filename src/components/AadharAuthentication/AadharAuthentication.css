@@ -68,6 +68,17 @@ input[type="text"] {
   background-color: #555;
 }
 
+.kyc {
+  color: #fff;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #313131;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 /* Style for success message */
 .success-message {
   text-align: center;
@@ -85,23 +96,73 @@ input[type="text"] {
 }
 
 /* KYC Successful Styles */
+/* KYC Successful Styles */
 .kyc-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: #fff;
-  
-}
-
-/* Show KYC successful section when isOTPVerified is true */
-.is-otp-verified .kyc-success {
-  display: block;
-}
-
-.kyc {
-  color: #fff;
-  max-width: 400px;
-  margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #313131;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+.kyc-head {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.kyc-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+/* Style for each field row */
+.kyc-row .row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 0;
+  margin: 10px 0;
+}
+
+.row label {
+  flex: 1;
+  text-align: right;
+  padding-right: 10px;
+}
+
+.row input[type="text"] {
+  flex: 2;
+  background-color: #eee;
+  border: 0.2px solid #555;
+  border-radius: 5px;
+  padding: 8px 10px;
+  width: 100%;
+}
+
+/* Style for the "Save" button */
+.save-btn {
+  display: flex;
+  justify-content: center;
+  width: 40%;
+  margin-top: 20px; /* Adjust the margin-top value to control the distance from the rows */
+}
+.saveButton {
+  display: block;
+  width: 30%; /* Adjust the width according to your preference */
+  padding: 10px;
+  font-size: 18px;
+  background-color: #ff9640;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin: 10px 0;
+}
+
+.saveButton:hover {
+  background-color: #555;
+}
+

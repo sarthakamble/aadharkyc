@@ -82,13 +82,13 @@ class AadharAuthentication extends Component {
 
   verifyOTP = () => {
     const { otp, ref_id } = this.state;
-  
+
     // Prepare JSON data for OTP and ref_id verification
     const verificationData = {
       otp: otp,
       ref_id: ref_id,
     };
-  
+
     Axios.post('http://localhost:8080/verifyotp', verificationData)
       .then(response => {
         if (response.data && response.data.code) {
@@ -99,7 +99,7 @@ class AadharAuthentication extends Component {
             code: 200,
             message: 'Success OK',
           };
-  
+
           // Check if the response matches the expected case
           if (
             expectedCase.ref_id === ref_id &&
@@ -125,7 +125,7 @@ class AadharAuthentication extends Component {
         console.error('Error during verification:', error);
       });
   };
-  
+
 
 
   // Function to show PAN verification section
@@ -195,40 +195,101 @@ class AadharAuthentication extends Component {
   renderKYCSuccess = () => {
     return (
       <div className="kyc-success">
-        <h2>KYC Successful</h2>
-        <p>Name: {this.state.name}</p>
-        <p>Date of Birth: {this.state.dob}</p>
-        <p>Relation: {this.state.care_of}</p>
-        <p>Ref ID: {this.state.ref_id}</p>
-        <p>Status: {this.state.status}</p>
-        <p>Message: {this.state.message}</p>
-        <p>Address: {this.state.address}</p>
-        <p>Email: {this.state.email}</p>
-        <p>Gender: {this.state.gender}</p>
-        <p>Year of Birth: {this.state.year_of_birth}</p>
-        <p>Mobile Hash: {this.state.mobile_hash}</p>
-        <p>Photo Link: {this.state.photo_link}</p>
-        <button className="classicButton" onClick={this.showPANVerification}>Next</button>
+        <div className="kyc-head">
+          <h2>KYC Successful</h2>
+        </div>
+        <div className="kyc-row">
+          <div class="row">
+            <label>Name:</label>
+            <input type="text" value={this.state.name} onChange={(e) => this.setState({ name: e.target.value })}/>
+          </div>
+          <div class="row">
+            <label>Date of Birth:</label>
+            <input type="text" value={this.state.dob} onChange={(e) => this.setState({ name: e.target.value })}/>
+          </div>
+          <div class="row">
+            <label>Relation:</label>
+            <input type="text" value={this.state.care_of} onChange={(e) => this.setState({ name: e.target.value })}/>
+          </div>
+          <div class="row">
+            <label>Ref ID:</label>
+            <input type="text" value={this.state.ref_id} onChange={(e) => this.setState({ name: e.target.value })}/>
+          </div>
+          <div class="row">
+            <label>Status:</label>
+            <input type="text" value={this.state.status} onChange={(e) => this.setState({ name: e.target.value })}/>
+          </div>
+          <div class="row">
+            <label>Message:</label>
+            <input type="text" value={this.state.message} onChange={(e) => this.setState({ name: e.target.value })}/>
+          </div>
+          <div class="row">
+            <label>Address:</label>
+            <input type="text" value={this.state.address} onChange={(e) => this.setState({ name: e.target.value })}/>
+          </div>
+          <div class="row">
+            <label>Email:</label>
+            <input type="text" value={this.state.email} onChange={(e) => this.setState({ name: e.target.value })}/>
+          </div>
+          <div class="row">
+            <label>Gender:</label>
+            <input type="text" value={this.state.gender} onChange={(e) => this.setState({ name: e.target.value })}/>
+          </div>
+          <div class="row">
+            <label>Year of Birth:</label>
+            <input type="text" value={this.state.year_of_birth} onChange={(e) => this.setState({ name: e.target.value })}/>
+          </div>
+          <div class="row">
+            <label>Mobile Hash:</label>
+            <input type="text" value={this.state.mobile_hash} onChange={(e) => this.setState({ name: e.target.value })}/>
+          </div>
+          <div class="row">
+            <label>Photo Link:</label>
+            <input type="text" value={this.state.photo_link} onChange={(e) => this.setState({ name: e.target.value })}/>
+          </div>
+        </div>
+        <div className="save-btn">
+          <button className="saveButton" onClick={this.showPANVerification}>Save</button>
+          </div>
       </div>
+
     );
   };
+
 
   render() {
     return (
       <div className="container-aadhar">
         {!this.state.isAuthenticated && (
           <div className="aadhar">
-            <h2>Aadhar Authentication</h2>
+            <h2>Aadhaar Authentication</h2>
             <label>
-              Aadhar Number:
+              Aadhaar Number:
               <input
                 type="text"
                 value={this.state.aadharNumber}
                 onChange={this.handleAadharChange}
               />
             </label>
+            <label>
+              Mobile Number:
+              <input
+                type="text"
+                value={this.state.mobileNumber}
+                onChange={this.handleMobileChange}
+              />
+            </label>
+            <label>
+              Email:
+              <input
+                type="text"
+                value={this.state.email}
+                onChange={this.handleEmailChange}
+              />
+            </label>
             <button className="classicButton" onClick={this.authenticateAadhar}>Authenticate</button>
           </div>
+
         )}
         {this.state.isAuthenticated && !this.state.isOTPVerified && (
           <div className="kyc">

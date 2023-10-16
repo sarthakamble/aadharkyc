@@ -82,7 +82,7 @@ class AadharAuthentication extends Component {
 
   verifyOTP = () => {
     const { otp, ref_id } = this.state;
-
+    //this.setState({ isOTPVerified: true });
     // Prepare JSON data for OTP and ref_id verification
     const verificationData = {
       otp: otp,
@@ -108,6 +108,7 @@ class AadharAuthentication extends Component {
           ) {
             // Handle the response based on the matched case
             message.success(expectedCase.message);
+            this.retrieveKYCDetails(response.data.data); // Pass the data to the retrieval function
             this.setState({ isOTPVerified: true });
           } else {
             // Handle the case where there is no match (all other cases)
@@ -199,53 +200,53 @@ class AadharAuthentication extends Component {
           <h2>KYC Successful</h2>
         </div>
         <div className="kyc-row">
-          <div class="row">
+          <div className="row">
             <label>Name:</label>
             <input type="text" value={this.state.name} onChange={(e) => this.setState({ name: e.target.value })}/>
           </div>
-          <div class="row">
+          <div className="row">
             <label>Date of Birth:</label>
-            <input type="text" value={this.state.dob} onChange={(e) => this.setState({ name: e.target.value })}/>
+            <input type="text" value={this.state.dob} onChange={(e) => this.setState({ dob: e.target.value })}/>
           </div>
-          <div class="row">
+          <div className="row">
             <label>Relation:</label>
-            <input type="text" value={this.state.care_of} onChange={(e) => this.setState({ name: e.target.value })}/>
+            <input type="text" value={this.state.care_of} onChange={(e) => this.setState({ care_of: e.target.value })}/>
           </div>
-          <div class="row">
+          <div className="row">
             <label>Ref ID:</label>
-            <input type="text" value={this.state.ref_id} onChange={(e) => this.setState({ name: e.target.value })}/>
+            <input type="text" value={this.state.ref_id} onChange={(e) => this.setState({ ref_id: e.target.value })}/>
           </div>
-          <div class="row">
+          <div className="row">
             <label>Status:</label>
-            <input type="text" value={this.state.status} onChange={(e) => this.setState({ name: e.target.value })}/>
+            <input type="text" value={this.state.status} onChange={(e) => this.setState({ status: e.target.value })}/>
           </div>
-          <div class="row">
+          <div className="row">
             <label>Message:</label>
-            <input type="text" value={this.state.message} onChange={(e) => this.setState({ name: e.target.value })}/>
+            <input type="text" value={this.state.message} onChange={(e) => this.setState({ message: e.target.value })}/>
           </div>
-          <div class="row">
+          <div className="row">
             <label>Address:</label>
-            <input type="text" value={this.state.address} onChange={(e) => this.setState({ name: e.target.value })}/>
+            <input type="text" value={this.state.address} onChange={(e) => this.setState({ address: e.target.value })}/>
           </div>
-          <div class="row">
+          <div className="row">
             <label>Email:</label>
-            <input type="text" value={this.state.email} onChange={(e) => this.setState({ name: e.target.value })}/>
+            <input type="text" value={this.state.email} onChange={(e) => this.setState({ email: e.target.value })}/>
           </div>
-          <div class="row">
+          <div className="row">
             <label>Gender:</label>
-            <input type="text" value={this.state.gender} onChange={(e) => this.setState({ name: e.target.value })}/>
+            <input type="text" value={this.state.gender} onChange={(e) => this.setState({ gender: e.target.value })}/>
           </div>
-          <div class="row">
+          <div className="row">
             <label>Year of Birth:</label>
-            <input type="text" value={this.state.year_of_birth} onChange={(e) => this.setState({ name: e.target.value })}/>
+            <input type="text" value={this.state.year_of_birth} onChange={(e) => this.setState({ year_of_birth: e.target.value })}/>
           </div>
-          <div class="row">
+          <div className="row">
             <label>Mobile Hash:</label>
-            <input type="text" value={this.state.mobile_hash} onChange={(e) => this.setState({ name: e.target.value })}/>
+            <input type="text" value={this.state.mobile_hash} onChange={(e) => this.setState({ mobile_hash: e.target.value })}/>
           </div>
-          <div class="row">
+          <div className="row">
             <label>Photo Link:</label>
-            <input type="text" value={this.state.photo_link} onChange={(e) => this.setState({ name: e.target.value })}/>
+            <input type="text" value={this.state.photo_link} onChange={(e) => this.setState({ photo_link: e.target.value })}/>
           </div>
         </div>
         <div className="save-btn">

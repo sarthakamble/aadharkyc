@@ -1,0 +1,60 @@
+/* Add this to your AadharAuthentication.css */
+.tab-bar {
+  display: flex;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: 50%; /* Position the left edge at the horizontal center */
+  transform: translateX(-50%); /* Center the element horizontally */
+  /* width: 100%; */
+  background-color: #555;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  max-width: 960px;
+  margin: auto;
+  white-space: normal;
+  border: 1px solid #fff;
+  border-radius: 24px;
+  height: 46px;
+  margin-bottom: 16px;
+  margin-top: 16px;
+}
+
+/* Define a step tab class */
+.custom-tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  color: #fff;
+  /* border: 1px solid #fff; */
+  position: relative; /* Make it a relative positioning container for the step */
+}
+
+/* Add a triangular step effect using :before pseudo-element */
+.custom-tab:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -10px; /* Adjust the value to control the size of the step */
+  width: 0;
+  height: 0;
+  border-style: solid;
+  /* border-top: 50px solid transparent;
+  border-bottom: 50px solid transparent;
+  border-left: 18px solid; */
+  border-color: transparent transparent transparent #fff; /* Adjust color as needed */
+  transform: translateY(-50%); /* Center the step vertically */
+}
+
+/* Style the last custom-tab without the step effect */
+.custom-tab:last-child:before {
+  display: none; /* Hide the step on the last tab */
+}
+
+/* Style the active step tab */
+.custom-tab.active {
+  background-color: #fff;
+  color: black;
+  font-weight: bold;
+  border: 1px solid #fff;
+}

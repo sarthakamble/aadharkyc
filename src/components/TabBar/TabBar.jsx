@@ -11,7 +11,7 @@ const TabBar = (props) => {
         className={`custom-tab ${activeTab === 'aadhar' ? 'active' : ''} ${isAadharDisabled ? 'disabled' : ''}`}
         onClick={() => !isAadharDisabled && onTabChange('aadhar')}
       >
-        Aadhar Authentication
+        Aadhaar Authentication
       </div>
       <div
         className={`custom-tab ${activeTab === 'kyc' ? 'active' : ''} ${isKycDisabled ? 'disabled' : ''}`}

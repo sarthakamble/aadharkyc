@@ -9,6 +9,7 @@ import './AadharAuthentication.css'
 import Axios from 'axios';
 import { message } from 'antd';
 import PANVerification from "../PANVerification/PANVerification";
+import TabBar from '../TabBar/TabBar'; // Import the TabBar component
 
 class AadharAuthentication extends Component {
   constructor(props) {
@@ -31,6 +32,13 @@ class AadharAuthentication extends Component {
       mobile_hash: "",
       photo_link: "",
       showPANVerification: false,
+      activeTab: 'aadhar', // Set the initial active tab
+      isAadharDisabled: false,
+      isKycDisabled: false,
+      isSuccessDisabled: false,
+      isAadharCompleted: false,
+      isKYCCompleted: false,
+      isSuccessCompleted: false,
     };
 
   }
@@ -53,7 +61,9 @@ class AadharAuthentication extends Component {
 
   authenticateAadhar = () => {
     const { aadharNumber } = this.state;
-    //this.setState({ isAuthenticated: true });
+    // this.setState({ isAuthenticated: true });
+    // this.setState({ isAadharCompleted: true });
+    // this.setState({ activeTab: 'kyc' });
     // Prepare JSON data to send to the server with the correct variable name
     const jsonData = {
       aadhaar_number: aadharNumber, // Use the correct variable name
@@ -67,6 +77,8 @@ class AadharAuthentication extends Component {
         if (response.data.message === 'OTP sent successfully') {
           this.setState({ isAuthenticated: true, ref_id: response.data.ref_id });
           message.success('OTP sent successfully');
+          this.setState({ activeTab: 'kyc' });
+          this.setState({ isAadharCompleted: true });
         } else {
           message.error(response.data.message);
           this.setState({ aadharNumber: '', isAuthenticated: false });  // Reset Aadhar number and set isAuthenticated to false
@@ -74,15 +86,18 @@ class AadharAuthentication extends Component {
       })
       .catch(error => {
         // Handle any errors and display an error message to the user
-        message.error('Error:', error.message);
-        console.error('Error:', error);
+        message.error(error.message);
+        console.error(error);
       });
   };
 
 
   verifyOTP = () => {
     const { otp, ref_id } = this.state;
-    //this.setState({ isOTPVerified: true });
+    // this.setState({ isOTPVerified: true });
+    // this.setState({ isKYCCompleted: true });
+    // this.setState({ isSuccessCompleted: true });
+    // this.setState({ activeTab: 'success' });
     // Prepare JSON data for OTP and ref_id verification
     const verificationData = {
       otp: otp,
@@ -106,10 +121,14 @@ class AadharAuthentication extends Component {
             expectedCase.otp === otp &&
             expectedCase.code === response.data.code
           ) {
+            this.setState({ activeTab: 'success' });
             // Handle the response based on the matched case
             message.success(expectedCase.message);
+            // console.log('Response Data:', response.data);
             this.retrieveKYCDetails(response.data.data); // Pass the data to the retrieval function
             this.setState({ isOTPVerified: true });
+            this.setState({ isKYCCompleted: true });
+            this.setState({ isSuccessCompleted: true });
           } else {
             // Handle the case where there is no match (all other cases)
             this.setState({ isOTPVerified: false });
@@ -132,6 +151,17 @@ class AadharAuthentication extends Component {
   // Function to show PAN verification section
   showPANVerification = () => {
     this.setState({ showPANVerification: true });
+    this.setState({ activeTab: 'pan-verification' });
+  };
+
+  // Add a function to change the active tab
+  changeActiveTab = (tabName) => {
+    this.setState({ activeTab: tabName });
+  };
+
+  // Update the state to enable or disable the next tab
+  updateIsDisabled = (isDisabled) => {
+    this.setState({ isDisabled });
   };
 
   retrieveKYCDetails = (data) => {
@@ -202,51 +232,51 @@ class AadharAuthentication extends Component {
         <div className="kyc-row">
           <div className="row">
             <label>Name:</label>
-            <input type="text" value={this.state.name} onChange={(e) => this.setState({ name: e.target.value })}/>
+            <input type="text" value={this.state.name} />
           </div>
           <div className="row">
             <label>Date of Birth:</label>
-            <input type="text" value={this.state.dob} onChange={(e) => this.setState({ dob: e.target.value })}/>
+            <input type="text" value={this.state.dob} />
           </div>
           <div className="row">
             <label>Relation:</label>
-            <input type="text" value={this.state.care_of} onChange={(e) => this.setState({ care_of: e.target.value })}/>
+            <input type="text" value={this.state.care_of} />
           </div>
           <div className="row">
             <label>Ref ID:</label>
-            <input type="text" value={this.state.ref_id} onChange={(e) => this.setState({ ref_id: e.target.value })}/>
+            <input type="text" value={this.state.ref_id} />
           </div>
           <div className="row">
             <label>Status:</label>
-            <input type="text" value={this.state.status} onChange={(e) => this.setState({ status: e.target.value })}/>
+            <input type="text" value={this.state.status} />
           </div>
           <div className="row">
             <label>Message:</label>
-            <input type="text" value={this.state.message} onChange={(e) => this.setState({ message: e.target.value })}/>
+            <input type="text" value={this.state.message} />
           </div>
           <div className="row">
             <label>Address:</label>
-            <input type="text" value={this.state.address} onChange={(e) => this.setState({ address: e.target.value })}/>
+            <input type="text" value={this.state.address} />
           </div>
           <div className="row">
             <label>Email:</label>
-            <input type="text" value={this.state.email} onChange={(e) => this.setState({ email: e.target.value })}/>
+            <input type="text" value={this.state.email} />
           </div>
           <div className="row">
             <label>Gender:</label>
-            <input type="text" value={this.state.gender} onChange={(e) => this.setState({ gender: e.target.value })}/>
+            <input type="text" value={this.state.gender} />
           </div>
           <div className="row">
             <label>Year of Birth:</label>
-            <input type="text" value={this.state.year_of_birth} onChange={(e) => this.setState({ year_of_birth: e.target.value })}/>
+            <input type="text" value={this.state.year_of_birth} />
           </div>
           <div className="row">
             <label>Mobile Hash:</label>
-            <input type="text" value={this.state.mobile_hash} onChange={(e) => this.setState({ mobile_hash: e.target.value })}/>
+            <input type="text" value={this.state.mobile_hash} />
           </div>
           <div className="row">
             <label>Photo Link:</label>
-            <input type="text" value={this.state.photo_link} onChange={(e) => this.setState({ photo_link: e.target.value })}/>
+            <input type="text" value={this.state.photo_link} />
           </div>
         </div>
         <div className="save-btn">
@@ -259,9 +289,17 @@ class AadharAuthentication extends Component {
 
 
   render() {
+    const { activeTab } = this.state;
     return (
       <div className="container-aadhar">
-        {!this.state.isAuthenticated && (
+        <TabBar
+          activeTab={activeTab}
+          onTabChange={this.changeActiveTab}
+          isAadharDisabled={!this.state.isAuthenticated || this.state.isAadharCompleted}
+          isKycDisabled={!this.state.isAuthenticated || !this.state.isOTPVerified || this.state.isKYCCompleted}
+          isSuccessDisabled={!this.state.isAuthenticated || !this.state.isOTPVerified || !this.state.showPANVerification || this.state.isSuccessCompleted}
+        />
+        {!this.state.isAuthenticated && this.state.activeTab === 'aadhar' && (
           <div className="aadhar">
             <h2>Aadhaar Authentication</h2>
             <label>
@@ -292,7 +330,7 @@ class AadharAuthentication extends Component {
           </div>
 
         )}
-        {this.state.isAuthenticated && !this.state.isOTPVerified && (
+        {this.state.isAuthenticated && !this.state.isOTPVerified && this.state.activeTab === 'kyc' && (
           <div className="kyc">
             <h2>OTP Verification</h2>
             <label>
@@ -306,7 +344,7 @@ class AadharAuthentication extends Component {
             <button className="classicButton" onClick={this.verifyOTP}>Verify OTP</button>
           </div>
         )}
-        {this.state.isOTPVerified && !this.state.showPANVerification && (
+        {this.state.isOTPVerified && !this.state.showPANVerification && this.state.activeTab === 'success' && (
           this.renderKYCSuccess()
         )}
         {/* {this.state.isOTPVerified && (
@@ -329,10 +367,12 @@ class AadharAuthentication extends Component {
           </div>
         )} */}
         {/* Conditionally render PAN verification section */}
-        {this.state.showPANVerification && <PANVerification />}
+        {this.state.showPANVerification && this.state.activeTab === 'pan-verification' && <PANVerification />}
       </div>
     );
   }
 }
+
+
 
 export default AadharAuthentication;

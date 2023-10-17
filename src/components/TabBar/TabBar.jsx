@@ -17,7 +17,7 @@ const TabBar = (props) => {
         className={`custom-tab ${activeTab === 'kyc' ? 'active' : ''} ${isKycDisabled ? 'disabled' : ''}`}
         onClick={() => !isKycDisabled && onTabChange('kyc')}
       >
-        KYC Details
+        OTP Verification
       </div>
       <div
         className={`custom-tab ${activeTab === 'success' ? 'active' : ''} ${isSuccessDisabled ? 'disabled' : ''}`}

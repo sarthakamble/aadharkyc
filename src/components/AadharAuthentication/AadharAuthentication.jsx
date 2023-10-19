@@ -8,7 +8,7 @@ import './AadharAuthentication.css'
 // } from "../../constants/routes"; // Import the constants
 import Axios from 'axios';
 import { message } from 'antd';
-import PANVerification from "../PANVerification/PANVerification";
+// import PANVerification from "../PANVerification/PANVerification";
 import TabBar from '../TabBar/TabBar'; // Import the TabBar component
 
 class AadharAuthentication extends Component {
@@ -39,6 +39,9 @@ class AadharAuthentication extends Component {
       isAadharCompleted: false,
       isKYCCompleted: false,
       isSuccessCompleted: false,
+      isPANVerified: false, // Initialize isPANVerified
+      pan: "", // Initialize pan
+      res: null, // Initialize res
     };
 
   }
@@ -146,7 +149,55 @@ class AadharAuthentication extends Component {
       });
   };
 
+  // PAN Verification
+  authenticatePAN = () => {
+    const pan = this.state.pan;
+    const res = this.state.res;
+    //this.setState({ isPANVerified: true });
 
+    if (pan === 'XXXPX1234A' || pan === 'XXXCX1234B') {
+      const jsonData = {
+        pan: pan,
+        consent: "Y",
+        reason: "For KYC of User"
+      };
+
+      Axios.post('http://localhost:8080/verifypan', jsonData)
+        .then(response => {
+          console.log(response.data);
+          this.setState({ isPANVerified: true, res: response.data });
+          message.success(response.data.message);
+        })
+        .catch(error => {
+          console.log(error);
+          message.error("Failed to authenticate PAN");
+        });
+    } else if (pan === 'XXXHX1234J') {
+      message.error("Invalid PAN");
+    } else if (pan === 'XXXPX1234C' || pan === 'XXXPX1234D') {
+      message.error("Insufficient Privilege");
+    } else if (pan === 'XXXPX123EE') {
+      message.error("Invalid PAN Pattern");
+    } else if (pan === 'XXXPX1234H') {
+      message.error("Consent Required");
+    } else if (pan === 'XXXPX1234F') {
+      message.error("Internal Server Error");
+    } else if (pan === 'XXXPX1234G') {
+      message.error("Source Unavailable");
+    } else {
+      message.error("Invalid PAN number provided");
+    }
+
+    // Resetting the state for every case other than success
+    this.setState({ isPANVerified: false, pan: "", res: null });
+  };
+
+  // setRes = (newRes) => {
+  //   this.setState({ res: newRes });
+  // }
+  handlePANChange = (event) => {
+    this.setState({ pan: event.target.value });
+  };
 
   // Function to show PAN verification section
   showPANVerification = () => {
@@ -224,6 +275,7 @@ class AadharAuthentication extends Component {
   };
 
   renderKYCSuccess = () => {
+    const { isPANVerified } = this.state;
     return (
       <div className="kyc-success">
         <div className="kyc-head">
@@ -242,7 +294,7 @@ class AadharAuthentication extends Component {
             <label>Relation:</label>
             <input type="text" value={this.state.care_of} />
           </div>
-          <div className="row">
+          {/* <div className="row">
             <label>Ref ID:</label>
             <input type="text" value={this.state.ref_id} />
           </div>
@@ -253,7 +305,7 @@ class AadharAuthentication extends Component {
           <div className="row">
             <label>Message:</label>
             <input type="text" value={this.state.message} />
-          </div>
+          </div> */}
           <div className="row">
             <label>Address:</label>
             <input type="text" value={this.state.address} />
@@ -274,14 +326,27 @@ class AadharAuthentication extends Component {
             <label>Mobile Hash:</label>
             <input type="text" value={this.state.mobile_hash} />
           </div>
-          <div className="row">
+          {/* <div className="row">
             <label>Photo Link:</label>
             <input type="text" value={this.state.photo_link} />
+          </div> */}
+          <div className="row">
+            <label>PAN Number:</label>
+            <input
+              type="text"
+              onChange={this.handlePANChange}
+              value={this.state.pan}
+            />
           </div>
         </div>
         <div className="save-btn">
-          <button className="saveButton" onClick={this.showPANVerification}>Save</button>
-          </div>
+          <button className="saveButton" onClick={this.authenticatePAN}>Verify</button>
+          {this.state.isPANVerified && ( // Only render if showPANVerification is true
+          <button className="saveButton" onClick={this.showPANVerification} disabled={!isPANVerified}>
+            Submit
+          </button>
+          )}
+        </div>
       </div>
 
     );
@@ -326,7 +391,7 @@ class AadharAuthentication extends Component {
                 onChange={this.handleEmailChange}
               />
             </label>
-            <button className="classicButton" onClick={this.authenticateAadhar}>Authenticate</button>
+            <button className="classicButton" onClick={this.authenticateAadhar}>Get OTP</button>
           </div>
 
         )}
@@ -367,7 +432,11 @@ class AadharAuthentication extends Component {
           </div>
         )} */}
         {/* Conditionally render PAN verification section */}
-        {this.state.showPANVerification && this.state.activeTab === 'pan-verification' && <PANVerification />}
+        {this.state.showPANVerification && this.state.activeTab === 'pan-verification' && (
+          <div className="successfull">
+            <h2>Account Opened Succcessfully</h2>
+          </div>
+        )}
       </div>
     );
   }

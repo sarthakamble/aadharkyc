@@ -6,16 +6,16 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #1a1818;
+  background-color: #fff;
 }
 .aadhar {
-  color: #fff;
+  color: #004b8d;
   max-width: 400px;
   padding: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid #75bee9;
   border-radius: 5px;
-  background-color: #313131;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #e1f4fd;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
 }
 /* Style for the common card layout for Aadhar and KYC sections */
 .card {
@@ -56,27 +56,27 @@ input[type="text"] {
   width: 100%;
   padding: 10px;
   font-size: 18px;
-  background-color: #ff9640;
+  background-color: #228b22;
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 25px;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .classicButton:hover {
-  background-color: #555;
+  background-color: #006400;
 }
 
 .kyc {
-  color: #fff;
+  color: #004b8d;
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid #75bee9;
   border-radius: 5px;
-  background-color: #313131;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #e1f4fd;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 /* Style for success message */
@@ -101,9 +101,12 @@ input[type="text"] {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #fff;
-  padding: 20px;
+  color: #004b8d;
+  padding: 20px 45px 20px 10px;
   margin-top: 30px;
+  background-color: #e1f4fd;
+  border-radius: 10px;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 .kyc-head {
@@ -154,16 +157,29 @@ input[type="text"] {
   width: 30%; /* Adjust the width according to your preference */
   padding: 10px;
   font-size: 18px;
-  background-color: #ff9640;
+  background-color: #228b22;
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 25px;
   cursor: pointer;
   transition: background-color 0.2s;
-  margin: 10px 0;
+  margin: 10px 10px;
 }
 
 .saveButton:hover {
-  background-color: #555;
+  background-color: #006400;
 }
 
+
+.successfull{
+  color: #004b8d;
+  background-color: #e1f4fd;
+  height: 90px;
+  width: auto;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 5px;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
+}

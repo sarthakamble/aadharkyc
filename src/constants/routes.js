@@ -18,4 +18,4 @@ export const verifyotp = "/verifyotp";
 // Routes
 export const Login_Page = '/';
 export const Landing_Page = '/home';
-// export const Search_Page = '/search';
+export const Account_Page = '/home/open-instant-savings-account-online';

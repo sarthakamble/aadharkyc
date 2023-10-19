@@ -1,0 +1,73 @@
+/* Landing.css */
+
+.landing-page {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+    padding: 20px;
+}
+
+.acc-card{
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin: 70px;
+    padding: 20px;
+    width: auto;
+    border-radius: 5px;
+    box-shadow: 10px 10px 5px #aaaaaa;
+    background-color: #e1f4fd;
+    color: #004b8d;
+}
+
+.landing-page h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.landing-page p {
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    color: black;
+}
+
+.landing-page ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.landing-page ul li {
+    margin: 10px 0;
+}
+
+.landing-page a {
+    text-decoration: none;
+    font-size: 20px;
+    color: #007BFF;
+    transition: color 0.3s;
+}
+
+.landing-page a:hover {
+    color: #0056b3;
+}
+
+.landing-page .open-acc {
+    padding: 10px 20px;
+    font-size: 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 25px;
+    transition: background-color 0.3s;
+}
+
+.open-acc:hover {
+    background-color: #0056b3;
+}

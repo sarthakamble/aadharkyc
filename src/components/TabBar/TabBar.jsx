@@ -11,7 +11,7 @@ const TabBar = (props) => {
         className={`custom-tab ${activeTab === 'aadhar' ? 'active' : ''} ${isAadharDisabled ? 'disabled' : ''}`}
         onClick={() => !isAadharDisabled && onTabChange('aadhar')}
       >
-        Aadhaar Authentication
+        Identify Yourself
       </div>
       <div
         className={`custom-tab ${activeTab === 'kyc' ? 'active' : ''} ${isKycDisabled ? 'disabled' : ''}`}
@@ -23,13 +23,13 @@ const TabBar = (props) => {
         className={`custom-tab ${activeTab === 'success' ? 'active' : ''} ${isSuccessDisabled ? 'disabled' : ''}`}
         onClick={() => !isSuccessDisabled && onTabChange('success')}
       >
-        Account Opened Successfully
+        KYC Details
       </div>
       <div
         className={`custom-tab ${activeTab === 'pan-verification' ? 'active' : ''} ${isSuccessDisabled ? 'disabled' : ''}`}
         onClick={() => !isSuccessDisabled && onTabChange('pan-verification')}
       >
-        PAN Verification
+        Account Opened Succcessfully
       </div>
     </div>
   );

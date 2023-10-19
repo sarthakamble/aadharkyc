@@ -7,14 +7,14 @@
   left: 50%; /* Position the left edge at the horizontal center */
   transform: translateX(-50%); /* Center the element horizontally */
   /* width: 100%; */
-  background-color: #555;
+  /* background-color: #004b8d; */
   padding: 0;
   align-items: center;
   justify-content: center;
   max-width: 960px;
   margin: auto;
   white-space: normal;
-  border: 1px solid #fff;
+  border: 1px solid #75bee9;
   border-radius: 24px;
   height: 46px;
   margin-bottom: 16px;
@@ -25,8 +25,8 @@
 .custom-tab {
   padding: 10px 20px;
   cursor: pointer;
-  color: #fff;
-  /* border: 1px solid #fff; */
+  color: #004b8d;
+  border: 1px solid #75bee9;
   position: relative; /* Make it a relative positioning container for the step */
 }
 
@@ -42,7 +42,7 @@
   /* border-top: 50px solid transparent;
   border-bottom: 50px solid transparent;
   border-left: 18px solid; */
-  border-color: transparent transparent transparent #fff; /* Adjust color as needed */
+  border-color: transparent transparent transparent #75bee9; /* Adjust color as needed */
   transform: translateY(-50%); /* Center the step vertically */
 }
 
@@ -53,8 +53,8 @@
 
 /* Style the active step tab */
 .custom-tab.active {
-  background-color: #fff;
-  color: black;
+  background-color: #004b8d;
+  color: #fff;
   font-weight: bold;
-  border: 1px solid #fff;
+  border: 1px solid #75bee9;
 }

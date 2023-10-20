@@ -42,12 +42,32 @@ class AadharAuthentication extends Component {
       isPANVerified: false, // Initialize isPANVerified
       pan: "", // Initialize pan
       res: null, // Initialize res
+      storedEmail: "", // Initialize a separate variable for storing email
     };
 
   }
 
   handleAadharChange = (event) => {
-    this.setState({ aadharNumber: event.target.value });
+    const inputAadhar = event.target.value;
+    // Remove all non-digits and spaces
+    const formattedAadhar = inputAadhar.replace(/[^\d]/g, '');
+  
+    if (formattedAadhar.length <= 12) {
+      // Add a space after every 4 digits for display
+      let formattedValue = '';
+      for (let i = 0; i < formattedAadhar.length; i += 4) {
+        formattedValue += formattedAadhar.slice(i, i + 4);
+        if (i + 4 < formattedAadhar.length) {
+          formattedValue += ' ';
+        }
+      }
+  
+      this.setState({ aadharNumber: formattedValue });
+  
+      // Set the actual value without spaces in a separate state variable
+      const aadharWithoutSpaces = formattedAadhar;
+      this.setState({ aadharNumberWithoutSpaces: aadharWithoutSpaces });
+    }
   };
 
   handleMobileChange = (event) => {
@@ -55,7 +75,7 @@ class AadharAuthentication extends Component {
   };
 
   handleEmailChange = (event) => {
-    this.setState({ email: event.target.value });
+    this.setState({ storedEmail: event.target.value });
   };
 
   handleOTPChange = (event) => {
@@ -63,17 +83,14 @@ class AadharAuthentication extends Component {
   };
 
   authenticateAadhar = () => {
-    const { aadharNumber } = this.state;
+    const { aadharNumberWithoutSpaces } = this.state;
     // this.setState({ isAuthenticated: true });
     // this.setState({ isAadharCompleted: true });
     // this.setState({ activeTab: 'kyc' });
     // Prepare JSON data to send to the server with the correct variable name
     const jsonData = {
-      aadhaar_number: aadharNumber, // Use the correct variable name
+      aadhaar_number: aadharNumberWithoutSpaces, // Use the correct variable name
     };
-
-
-
     Axios.post('http://localhost:8080/generateotp', jsonData)
       .then(response => {
         // Handle the response from the server, e.g., check if authentication is successful
@@ -96,7 +113,7 @@ class AadharAuthentication extends Component {
 
 
   verifyOTP = () => {
-    const { otp, ref_id } = this.state;
+    const { otp, ref_id, storedEmail } = this.state;
     // this.setState({ isOTPVerified: true });
     // this.setState({ isKYCCompleted: true });
     // this.setState({ isSuccessCompleted: true });
@@ -132,6 +149,7 @@ class AadharAuthentication extends Component {
             this.setState({ isOTPVerified: true });
             this.setState({ isKYCCompleted: true });
             this.setState({ isSuccessCompleted: true });
+            this.setState({ email: storedEmail }); // Update email with the stored value
           } else {
             // Handle the case where there is no match (all other cases)
             this.setState({ isOTPVerified: false });
@@ -275,7 +293,7 @@ class AadharAuthentication extends Component {
   };
 
   renderKYCSuccess = () => {
-    const { isPANVerified } = this.state;
+    const { isPANVerified, pan, email } = this.state;
     return (
       <div className="kyc-success">
         <div className="kyc-head">
@@ -335,12 +353,12 @@ class AadharAuthentication extends Component {
             <input
               type="text"
               onChange={this.handlePANChange}
-              value={this.state.pan}
+              value={pan} // Use the stored PAN value
             />
           </div>
         </div>
         <div className="save-btn">
-          <button className="saveButton" onClick={this.authenticatePAN}>Verify</button>
+          <button className="saveButton" onClick={this.authenticatePAN} disabled={!pan}>Verify PAN</button>
           {this.state.isPANVerified && ( // Only render if showPANVerification is true
           <button className="saveButton" onClick={this.showPANVerification} disabled={!isPANVerified}>
             Submit
@@ -371,6 +389,7 @@ class AadharAuthentication extends Component {
               Aadhaar Number:
               <input
                 type="text"
+                placeholder="XXXX-XXXX-XXXX"
                 value={this.state.aadharNumber}
                 onChange={this.handleAadharChange}
               />
@@ -387,7 +406,7 @@ class AadharAuthentication extends Component {
               Email:
               <input
                 type="text"
-                value={this.state.email}
+                value={this.state.storedEmail}
                 onChange={this.handleEmailChange}
               />
             </label>

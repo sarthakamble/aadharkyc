@@ -145,6 +145,11 @@ input[type="text"] {
   width: 100%;
 }
 
+.success-message p{
+  color: #228b22 !important;
+  padding: 5px;
+}
+
 /* Style for the "Save" button */
 .save-btn {
   display: flex;
@@ -170,16 +175,25 @@ input[type="text"] {
   background-color: #006400;
 }
 
-
 .successfull{
   color: #004b8d;
   background-color: #e1f4fd;
   height: 90px;
   width: auto;
+  height: auto;
   justify-content: center;
   align-items: center;
   padding: 20px;
   margin: 20px;
   border-radius: 5px;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
+}
+.successfull h2{
+  margin-bottom: 20px;
+}
+.successfull p{
+  text-align: left;
+  margin: 10px;
+  padding: 5px;
+  color: #004b8d;
 }

@@ -29,7 +29,7 @@ const TabBar = (props) => {
         className={`custom-tab ${activeTab === 'pan-verification' ? 'active' : ''} ${isSuccessDisabled ? 'disabled' : ''}`}
         onClick={() => !isSuccessDisabled && onTabChange('pan-verification')}
       >
-        Account Opened Succcessfully
+        Account Details
       </div>
     </div>
   );

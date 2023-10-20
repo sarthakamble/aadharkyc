@@ -43,6 +43,7 @@ class AadharAuthentication extends Component {
       pan: "", // Initialize pan
       res: null, // Initialize res
       storedEmail: "", // Initialize a separate variable for storing email
+      panInput: "",
     };
 
   }
@@ -169,7 +170,7 @@ class AadharAuthentication extends Component {
 
   // PAN Verification
   authenticatePAN = () => {
-    const pan = this.state.pan;
+    const pan = this.state.panInput;
     const res = this.state.res;
     //this.setState({ isPANVerified: true });
 
@@ -184,7 +185,7 @@ class AadharAuthentication extends Component {
         .then(response => {
           console.log(response.data);
           this.setState({ isPANVerified: true, res: response.data });
-          message.success(response.data.message);
+          message.success("PAN Verification Successful. Please click Submit button");
         })
         .catch(error => {
           console.log(error);
@@ -214,7 +215,7 @@ class AadharAuthentication extends Component {
   //   this.setState({ res: newRes });
   // }
   handlePANChange = (event) => {
-    this.setState({ pan: event.target.value });
+    this.setState({ panInput: event.target.value });
   };
 
   // Function to show PAN verification section
@@ -293,7 +294,7 @@ class AadharAuthentication extends Component {
   };
 
   renderKYCSuccess = () => {
-    const { isPANVerified, pan, email } = this.state;
+    const { isPANVerified, panInput, email } = this.state;
     return (
       <div className="kyc-success">
         <div className="kyc-head">
@@ -353,12 +354,19 @@ class AadharAuthentication extends Component {
             <input
               type="text"
               onChange={this.handlePANChange}
-              value={pan} // Use the stored PAN value
+              value={panInput} // Use the stored PAN value
             />
           </div>
         </div>
+        <div className="success-message">
+          {this.state.isPANVerified && (
+            <p>PAN Verification Successful. Please click Submit button</p>
+          )}
+        </div>
         <div className="save-btn">
-          <button className="saveButton" onClick={this.authenticatePAN} disabled={!pan}>Verify PAN</button>
+          {!isPANVerified && (
+          <button className="saveButton" onClick={this.authenticatePAN} disabled={!panInput}>Verify PAN</button>
+          )}
           {this.state.isPANVerified && ( // Only render if showPANVerification is true
           <button className="saveButton" onClick={this.showPANVerification} disabled={!isPANVerified}>
             Submit
@@ -454,6 +462,8 @@ class AadharAuthentication extends Component {
         {this.state.showPANVerification && this.state.activeTab === 'pan-verification' && (
           <div className="successfull">
             <h2>Account Opened Succcessfully</h2>
+            <p>Name: {this.state.name}</p>
+            <p>Account Number: BE96 4567 7896 4789</p>
           </div>
         )}
       </div>
